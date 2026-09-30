@@ -628,8 +628,8 @@ html[data-lang="en"] .foot{font-family:var(--body);font-size:9.5px;letter-spacin
       <span></span><span></span><span></span>
     </div>
   </div>
-  <div id="videoBg" style="background-image:url('pond-9x16.jpg')"></div>
-  <video id="introVideo" muted playsinline preload="auto" poster="pond-9x16.jpg" aria-hidden="true"></video>
+  <div id="videoBg" style="background-image:url('poster-9x16.jpg')"></div>
+  <video id="introVideo" muted playsinline preload="auto" poster="poster-9x16.jpg" aria-hidden="true"></video>
   <svg id="pond" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <radialGradient id="water" cx="50%" cy="42%" r="78%">
@@ -1058,8 +1058,8 @@ const vidBg=document.getElementById('videoBg');
 let dismissed=false, opened=false, triedPortrait=false, safetyTimer=null, clipPreloaded=false, realPlay=false, shown=false;
 
 const CLIPS={
-  portrait:{mp4:'pond-9x16.mp4',webm:'pond-9x16.webm',poster:'pond-9x16.jpg'},
-  landscape:{mp4:'pond-16x9.mp4',webm:'pond-16x9.webm',poster:'pond-16x9.jpg'}
+  portrait:{mp4:'pond-9x16.mp4',webm:'pond-9x16.webm',poster:'poster-9x16.jpg'},
+  landscape:{mp4:'pond-16x9.mp4',webm:'pond-16x9.webm',poster:'poster-16x9.jpg'}
 };
 function pickClip(){ return (window.innerWidth/window.innerHeight>=1)?CLIPS.landscape:CLIPS.portrait; }
 
