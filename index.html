@@ -533,6 +533,12 @@ html[data-lang="en"] .btn{font-family:var(--body);font-size:9.5px;letter-spacing
 html[data-lang="en"] .close .script{font-family:var(--display);font-size:clamp(40px,11vw,68px);font-style:italic;font-weight:400;line-height:1}
 .close p{margin:28px auto 0;max-width:32ch;color:rgba(248,240,220,.78)}
 .close .btn{margin-top:36px}
+.contacts{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:26px}
+.close .contacts .btn{margin-top:0}
+.wa-btn{display:inline-flex;flex-direction:column;align-items:center;gap:5px;min-width:190px;padding:15px 24px}
+.wa-btn .c-name{font-family:var(--gurmukhi);font-size:17px;letter-spacing:.02em;text-transform:none;font-weight:600}
+html[data-lang="en"] .wa-btn .c-name{font-family:var(--display);font-size:19px;letter-spacing:0;text-transform:none;font-weight:400}
+.wa-btn .c-sub{font-family:var(--body);font-size:9px;letter-spacing:.24em;text-transform:uppercase;opacity:.7}
 .ardas-block{
   margin:36px auto 0;padding:28px 24px;
   border:1px solid rgba(231,200,126,.25);
@@ -858,8 +864,17 @@ html[data-lang="en"] .foot{font-family:var(--body);font-size:9.5px;letter-spacin
     </div>
 
     <div class="dbl" style="margin-top:36px"><svg viewBox="0 0 24 30" aria-hidden="true"><path d="M12 1c6 3 10 8 10 14 0 6-4 10-9 10-4 0-7-3-7-7 0-4 3-6 6-6 2 0 4 1 4 3"/><path d="M12 1c-3 4-5 8-5 12"/></svg></div>
-    <p class="body-txt" style="margin-top:28px" data-pa="ਹੇਠਾਂ ਕਲਿੱਕ ਕਰਕੇ ਆਪਣੀ ਹਾਜ਼ਰੀ ਪੱਕੀ ਕਰੋ ਜੀ। ਧੰਨਵਾਦ।" data-en="Please confirm your presence by clicking below. Thank you.">ਹੇਠਾਂ ਕਲਿੱਕ ਕਰਕੇ ਆਪਣੀ ਹਾਜ਼ਰੀ ਪੱਕੀ ਕਰੋ ਜੀ। ਧੰਨਵਾਦ।</p>
-    <a class="btn filled" id="rsvpBtn" href="https://wa.me/393513985109?text=ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਅਸੀਂ ਜ਼ਰੂਰ ਆਵਾਂਗੇ!" target="_blank" rel="noopener" data-pa="ਵਟਸਐਪ ਤੇ ਦੱਸੋ" data-en="Confirm on WhatsApp">ਵਟਸਐਪ ਤੇ ਦੱਸੋ</a>
+    <p class="body-txt" style="margin-top:28px" data-pa="ਹਾਜ਼ਰੀ ਜਾਂ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ ਸੰਪਰਕ ਕਰੋ ਜੀ" data-en="To confirm your presence or for more information">ਹਾਜ਼ਰੀ ਜਾਂ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ ਸੰਪਰਕ ਕਰੋ ਜੀ</p>
+    <div class="contacts">
+      <a class="btn filled wa-btn" href="https://wa.me/393285632986?text=%E0%A8%B8%E0%A8%A4%E0%A8%BF%20%E0%A8%B8%E0%A9%8D%E0%A8%B0%E0%A9%80%20%E0%A8%85%E0%A8%95%E0%A8%BE%E0%A8%B2%20%E0%A8%9C%E0%A9%80%2C%20%E0%A8%B9%E0%A8%BE%E0%A8%82%E0%A8%9C%E0%A9%80%20%E0%A8%85%E0%A8%B8%E0%A9%80%E0%A8%82%20%E0%A8%9C%E0%A8%BC%E0%A8%B0%E0%A9%82%E0%A8%B0%20%E0%A8%86%E0%A8%B5%E0%A8%BE%E0%A8%82%E0%A8%97%E0%A9%87%21" target="_blank" rel="noopener">
+        <span class="c-name" data-pa="ਸ. ਗੁਰਮੇਲ ਸਿੰਘ" data-en="S. Gurmail Singh">ਸ. ਗੁਰਮੇਲ ਸਿੰਘ</span>
+        <span class="c-sub">WhatsApp</span>
+      </a>
+      <a class="btn filled wa-btn" href="https://wa.me/393513985109?text=%E0%A8%B8%E0%A8%A4%E0%A8%BF%20%E0%A8%B8%E0%A9%8D%E0%A8%B0%E0%A9%80%20%E0%A8%85%E0%A8%95%E0%A8%BE%E0%A8%B2%20%E0%A8%9C%E0%A9%80%2C%20%E0%A8%B9%E0%A8%BE%E0%A8%82%E0%A8%9C%E0%A9%80%20%E0%A8%85%E0%A8%B8%E0%A9%80%E0%A8%82%20%E0%A8%9C%E0%A8%BC%E0%A8%B0%E0%A9%82%E0%A8%B0%20%E0%A8%86%E0%A8%B5%E0%A8%BE%E0%A8%82%E0%A8%97%E0%A9%87%21" target="_blank" rel="noopener">
+        <span class="c-name" data-pa="ਦਿਲਪ੍ਰੀਤ ਸਿੰਘ" data-en="Dilpreet Singh">ਦਿਲਪ੍ਰੀਤ ਸਿੰਘ</span>
+        <span class="c-sub">WhatsApp</span>
+      </a>
+    </div>
   </div>
 </section>
 
