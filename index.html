@@ -223,10 +223,11 @@ html[data-lang="en"] .env-cap .script{font-size:clamp(32px,9vw,44px)}
 .sh-dots span:nth-child(2){animation-delay:3.7s}
 .sh-dots span:nth-child(3){animation-delay:3.9s}
 @keyframes dotFade{0%,100%{opacity:.15}40%{opacity:.9}}
-#introVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:transparent;opacity:0;transition:opacity .5s ease}
+#introVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:transparent;opacity:1}
 #introVideo.ready{opacity:1}
 #videoBg{position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(28px) brightness(.62);transform:scale(1.1)}
-#intro.has-video #pond,#intro.has-video .intro-txt{display:none}
+#intro:not(.no-video) #pond,#intro:not(.no-video) .intro-txt{display:none}
+#intro.no-video #introVideo{display:none}
 #pond{position:absolute;inset:0;width:100%;height:100%;display:block}
 #cam{transform-origin:200px 400px;animation:pullback 11s cubic-bezier(.32,.06,.28,1) both}
 @keyframes pullback{0%{transform:scale(1.5) translate(6px,24px)}100%{transform:scale(1) translate(0,0)}}
@@ -628,7 +629,7 @@ html[data-lang="en"] .foot{font-family:var(--body);font-size:9.5px;letter-spacin
     </div>
   </div>
   <div id="videoBg" style="background-image:url('pond-9x16.jpg')"></div>
-  <video id="introVideo" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video id="introVideo" muted playsinline preload="auto" poster="pond-9x16.jpg" aria-hidden="true"></video>
   <svg id="pond" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <radialGradient id="water" cx="50%" cy="42%" r="78%">
@@ -1054,7 +1055,7 @@ const track=document.getElementById('track');
 const mBtn=document.getElementById('musicBtn');
 const vidBg=document.getElementById('videoBg');
 
-let dismissed=false, opened=false, triedPortrait=false, safetyTimer=null, clipPreloaded=false;
+let dismissed=false, opened=false, triedPortrait=false, safetyTimer=null, clipPreloaded=false, realPlay=false, shown=false;
 
 const CLIPS={
   portrait:{mp4:'pond-9x16.mp4',webm:'pond-9x16.webm',poster:'pond-9x16.jpg'},
@@ -1081,10 +1082,11 @@ function onPlaying(){
 }
 function onVideoFail(){
   if(!triedPortrait && pickClip()===CLIPS.landscape){ triedPortrait=true; loadClip(CLIPS.portrait); return; }
-  intro.classList.remove('has-video'); themeColor('#0C3A35');
+  intro.classList.remove('has-video'); intro.classList.add('no-video'); themeColor('#0C3A35');
 }
 function loadClip(c){
-  if(clipPreloaded){ vid.play().catch(onVideoFail); return; }
+  realPlay=true;
+  if(clipPreloaded){ try{vid.currentTime=0;}catch(e){} vid.play().catch(onVideoFail); return; }
   vid.innerHTML='<source src="'+c.webm+'" type="video/webm"><source src="'+c.mp4+'" type="video/mp4">';
   vid.poster=c.poster; vidBg.style.backgroundImage="url('"+c.poster+"')";
   vid.load(); vid.play().catch(onVideoFail);
@@ -1095,11 +1097,14 @@ function preloadClip(){
   vid.innerHTML='<source src="'+c.webm+'" type="video/webm"><source src="'+c.mp4+'" type="video/mp4">';
   vid.poster=c.poster; vidBg.style.backgroundImage="url('"+c.poster+"')";
   vid.load();
+  /* warm-up: avvia e ferma subito il video (muto) dietro la busta, cosi il browser lo scarica in anticipo */
+  var w=vid.play();
+  if(w && w.then) w.then(function(){ if(!realPlay){ vid.pause(); try{vid.currentTime=0;}catch(e){} } }).catch(function(){});
 }
-setTimeout(preloadClip,600);
-vid.addEventListener('playing',onPlaying,{once:true});
+preloadClip();
+vid.addEventListener('playing',function(){ if(realPlay && !shown){ shown=true; onPlaying(); } });
 vid.addEventListener('error',onVideoFail,{once:true});
-vid.addEventListener('stalled',function(){ setTimeout(function(){ if(!intro.classList.contains('has-video')) onVideoFail(); },3000); },{once:true});
+vid.addEventListener('stalled',function(){ setTimeout(function(){ if(realPlay && !intro.classList.contains('has-video')) onVideoFail(); },3000); });
 
 /* BUSTA click */
 document.getElementById('envBtn').addEventListener('click',function(){
@@ -1134,7 +1139,7 @@ document.getElementById('skip').addEventListener('click',dismissIntro);
 })();
 
 /* MUSICA */
-const MUSIC_FILES=['music/1.mp3','music/2.mp3','music/3.mp3','music/4.mp3','music/5.mp3','music/6.mp3','music/7.mp3'];
+const MUSIC_FILES=['music/1.mp3','music/2.mp3','music/3.mp3','music/4.mp3','music/5.mp3','music/6.mp3','music/7.mp3','music/8.mp3'];
 let mIdx=Math.floor(Math.random()*MUSIC_FILES.length);
 function musicLabel(playing){
   const lpa=playing?'ਸੰਗੀਤ ਬੰਦ ਕਰੋ':'ਸੰਗੀਤ ਚਲਾਓ';
