@@ -186,6 +186,10 @@ html[data-lang="en"] .env-hint{font-family:var(--body);font-size:8.5px;letter-sp
 .cal-wrap{margin-top:34px}
 .btn-cal{border-color:var(--line-lt);color:rgba(248,240,220,.8)}
 .btn-cal:hover{background:var(--gold-lt);border-color:var(--gold-lt);color:var(--deep-3)}
+.env-guest{margin:0 auto 26px;max-width:22ch;text-align:center;color:var(--gold-lt,#E7C87E);font-family:var(--gurmukhi);font-weight:600;font-size:clamp(20px,5.6vw,26px);line-height:1.45}
+.env-guest small{display:block;font-weight:400;font-size:.62em;letter-spacing:.06em;opacity:.75;margin-bottom:2px;color:var(--paper)}
+html[data-lang="en"] .env-guest{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(24px,6.6vw,32px);line-height:1.2}
+html[data-lang="en"] .env-guest small{font-family:var(--body);font-style:normal;font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px}
 .env-cap{margin-top:32px;color:var(--paper)}
 .env-cap .script{display:block;line-height:1;font-size:clamp(19px,5vw,25px)}
 html[data-lang="en"] .env-cap .script{font-size:clamp(32px,9vw,44px)}
@@ -596,6 +600,7 @@ html[data-lang="en"] .foot{font-family:var(--body);font-size:9.5px;letter-spacin
 <!-- BUSTA -->
 <div id="env">
   <div class="env-stage">
+    <p class="env-guest" id="envGuest" hidden></p>
     <button class="env-btn" id="envBtn" aria-label="ਸੱਦਾ ਪੱਤਰ ਖੋਲ੍ਹੋ">
       <div class="env-body">
         <div class="env-card">
@@ -882,6 +887,24 @@ html[data-lang="en"] .foot{font-family:var(--body);font-size:9.5px;letter-spacin
 <div class="foot" data-pa="ਸੁਖਪ੍ਰੀਤ <span class=&quot;hrt&quot;>&#9829;</span> ਮਨਰੂਪ &nbsp;·&nbsp; 30 ਜਨਵਰੀ 2027" data-en="SUKHPREET <span class=&quot;hrt&quot;>&#9829;</span> MANROOP &nbsp;·&nbsp; 30 JANUARY 2027">ਸੁਖਪ੍ਰੀਤ <span class="hrt">&#9829;</span> ਮਨਰੂਪ &nbsp;·&nbsp; 30 ਜਨਵਰੀ 2027</div>
 
 <script>
+/* 0. NOME INVITATO: ?n=Nome+Cognome nel link */
+(function(){
+  var n='';
+  try{ n=(new URLSearchParams(location.search).get('n')||'').replace(/\s+/g,' ').trim().slice(0,60); }catch(e){}
+  if(!n) return;
+  function e(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];});}
+  var disp=/(\bji|ਜੀ)$/i.test(n)?n:n+' ji';
+  var el=document.getElementById('envGuest');
+  if(el){
+    el.setAttribute('data-pa','<small>ਸਤਿਕਾਰਯੋਗ</small>'+e(disp));
+    el.setAttribute('data-en','<small>Dear</small>'+e(disp));
+    el.innerHTML=el.getAttribute('data-'+(document.documentElement.dataset.lang||'pa'));
+    el.hidden=false;
+  }
+  var msg='ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਹਾਂਜੀ ਅਸੀਂ ਜ਼ਰੂਰ ਆਵਾਂਗੇ! — '+n;
+  document.querySelectorAll('.wa-btn').forEach(function(a){ a.href=a.href.split('?')[0]+'?text='+encodeURIComponent(msg); });
+})();
+
 /* 1. EVENT DATA */
 const EVENTS = [
   {
