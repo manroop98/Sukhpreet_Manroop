@@ -18,7 +18,7 @@
 <meta name="twitter:image" content="https://manroop98.github.io/Sukhpreet_Manroop_30_01_27/preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@200;300;400;500&family=Noto+Serif+Gurmukhi:wght@300;400;600&family=Noto+Sans+Gurmukhi:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Tiro+Gurmukhi:ital@0;1&family=Pinyon+Script&family=Jost:wght@200;300;400;500&family=Noto+Serif+Gurmukhi:wght@300;400;600&family=Noto+Sans+Gurmukhi:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --deep:#6B1420;
@@ -659,6 +659,18 @@ html[data-lang="en"] .mh-names{font-family:var(--display);font-size:clamp(20px,5
 .mask-sec.hello-in .mh-cue{transition-delay:2.4s}
 .mask-sec.hello-in .mask-photo{animation:helloZoom 2.6s cubic-bezier(.2,.7,.2,1) both}
 @keyframes helloZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+/* APERTURA VARIANTE A: in alto, grande, font premium */
+.mask-hello{top:0;bottom:0;align-content:start;padding-top:calc(env(safe-area-inset-top,0px) + 92px);padding-bottom:0;gap:8px;color:#4A3210;
+  text-shadow:0 0 22px rgba(255,251,240,.95),0 0 4px rgba(255,251,240,.8)}
+.mask-hello::before{top:0;bottom:auto;height:62vh;background:linear-gradient(to bottom,rgba(251,247,238,.8),rgba(251,247,238,.5) 55%,rgba(251,247,238,0))}
+.mh-save{color:#9C7630!important;font-size:15px}
+html[data-lang="en"] .mh-save{font-size:11.5px;letter-spacing:.5em;text-indent:.5em}
+.mh-title{font-family:'Tiro Gurmukhi',var(--gurmukhi);font-weight:400;font-size:clamp(54px,15vw,92px);line-height:1.12;color:#5A3A12}
+html[data-lang="en"] .mh-title{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(50px,14vw,100px);line-height:1;white-space:nowrap;color:#5A3A12}
+.mh-names{font-family:'Tiro Gurmukhi',var(--gurmukhi);font-size:clamp(24px,6.6vw,34px);color:#A07A30}
+html[data-lang="en"] .mh-names{font-family:'Pinyon Script',cursive;font-size:clamp(28px,7.8vw,46px);letter-spacing:0;line-height:1.2;white-space:nowrap;color:#A07A30}
+.mh-date{color:#6B4A16;border-top-color:rgba(160,122,48,.45);border-bottom-color:rgba(160,122,48,.45)}
+.mh-cue{position:absolute;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));margin:0;color:rgba(255,250,235,.9)!important;text-shadow:0 1px 8px rgba(30,22,10,.75)}
 </style>
 </head>
 <body class="is-locked">
