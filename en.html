@@ -626,10 +626,13 @@ html[data-lang="en"] .mask-cap .mask-date{font-family:var(--display);font-style:
 @media(prefers-reduced-motion:reduce){.w.on{animation:none}#rosePetals{display:none}}
 /* ROSA CHE SBOCCIA NELLA TIMELINE */
 @media(max-width:819px){
-  .tl-pilgrim{width:46px;height:46px}
-  .tl-pilgrim svg.rose{width:46px;height:46px;overflow:visible;animation:roseGlow 3.4s ease-in-out infinite}
+  .tl-pilgrim{width:46px;height:46px;will-change:transform}
+  .tl-pilgrim::before{content:"";position:absolute;inset:-12px;border-radius:50%;
+    background:radial-gradient(circle,rgba(231,200,126,.6),rgba(231,200,126,0) 65%);
+    animation:roseHalo 3.4s ease-in-out infinite;will-change:opacity}
+  .tl-pilgrim svg.rose{position:relative;width:46px;height:46px;overflow:visible;animation:none;filter:none}
 }
-@keyframes roseGlow{0%,100%{filter:drop-shadow(0 0 4px rgba(231,200,126,.45))}50%{filter:drop-shadow(0 0 10px rgba(231,200,126,.9))}}
+@keyframes roseHalo{0%,100%{opacity:.45}50%{opacity:1}}
 </style>
 </head>
 <body class="is-locked">
@@ -1300,6 +1303,17 @@ var roseBloom=(function(){
   var pilgrim=document.getElementById('tlPilgrim');
   var container=document.querySelector('.tl-container');
   if(!pilgrim||!container) return;
+  var curY=null,curP=0,tgtY=0,tgtP=0,tlRaf=null;
+  function tlStep(){
+    tlRaf=null;
+    if(curY===null){ curY=tgtY; curP=tgtP; }
+    curY+=(tgtY-curY)*.25; curP+=(tgtP-curP)*.14;
+    if(Math.abs(tgtY-curY)<.3) curY=tgtY;
+    if(Math.abs(tgtP-curP)<.0005) curP=tgtP;
+    pilgrim.style.transform='translate3d(-50%,'+curY.toFixed(1)+'px,0) translateY(-50%)';
+    if(roseBloom) roseBloom(curP);
+    if(curY!==tgtY||curP!==tgtP) tlRaf=requestAnimationFrame(tlStep);
+  }
   function updateTl(){
     if(mq.matches){pilgrim.style.display='none';return;}
     pilgrim.style.display='';
@@ -1308,8 +1322,8 @@ var roseBloom=(function(){
     var vh=window.innerHeight;
     var raw=(vh-rect.top)/(vh+h);
     var p=Math.max(0.012,Math.min(0.988,raw));
-    pilgrim.style.top=(h*p)+'px';
-    if(roseBloom) roseBloom(p);
+    tgtY=h*p; tgtP=p;
+    if(!tlRaf) tlRaf=requestAnimationFrame(tlStep);
   }
   window.addEventListener('scroll',updateTl,{passive:true});
   window.addEventListener('resize',updateTl,{passive:true});
