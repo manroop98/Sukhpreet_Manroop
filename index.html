@@ -620,6 +620,11 @@ html[data-lang="en"] .mask-cap .mask-date{font-family:var(--display);font-style:
 .count .cring .arc{fill:none;stroke:var(--gold-lt);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:226.2;stroke-dashoffset:226.2;transition:stroke-dashoffset .8s ease}
 .count .cring b{position:relative;font-size:clamp(22px,6.2vw,30px)}
 @media(prefers-reduced-motion:reduce){.w{opacity:1}}
+/* PETALI DI ROSA DURANTE LO SCROLL */
+#rosePetals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:55}
+.w.on{animation:wglow 1.4s ease-out}
+@keyframes wglow{0%{text-shadow:0 0 12px rgba(231,200,126,.95),0 0 2px rgba(199,155,72,.8)}100%{text-shadow:0 0 0 rgba(231,200,126,0)}}
+@media(prefers-reduced-motion:reduce){.w.on{animation:none}#rosePetals{display:none}}
 </style>
 </head>
 <body class="is-locked">
@@ -741,6 +746,7 @@ html[data-lang="en"] .mask-cap .mask-date{font-family:var(--display);font-style:
   </button>
 </div>
 <audio id="track" preload="none"></audio>
+<canvas id="rosePetals" aria-hidden="true"></canvas>
 
 <!-- HERO -->
 <header class="hero">
@@ -1332,6 +1338,61 @@ function observeReveals(){
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',onScroll,{passive:true});
   maskScroll(); wordsScroll();
+})();
+
+/* PETALI DI ROSA DURANTE LO SCROLL */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var cv=document.getElementById('rosePetals'); if(!cv||!cv.getContext) return;
+  var ctx=cv.getContext('2d'), W=0, H=0, petals=[], raf=null, lastY=window.scrollY, budget=0;
+  var colors=[['#6B1420','#A8283B'],['#8A2130','#C23B4E'],['#7A1828','#D2566A'],['#9E2236','#E07A8A']];
+  var MAX=Math.min(40,Math.round(window.innerWidth/10));
+  function resize(){
+    var d=Math.min(window.devicePixelRatio||1,2);
+    W=cv.clientWidth; H=cv.clientHeight; cv.width=W*d; cv.height=H*d; ctx.setTransform(d,0,0,d,0,0);
+  }
+  function make(){
+    var c=colors[Math.floor(Math.random()*colors.length)];
+    return {x:Math.random()*W, y:-20-Math.random()*60, s:7+Math.random()*7, vy:.7+Math.random()*1.1,
+      vx:-.4+Math.random()*.8, r:Math.random()*6.28, vr:-.04+Math.random()*.08, sw:Math.random()*6.28,
+      flip:Math.random()*6.28, c1:c[0], c2:c[1], a:0};
+  }
+  function drawPetal(p){
+    var s=p.s, k=Math.abs(Math.cos(p.flip));
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.scale(1,.35+k*.65);
+    var g=ctx.createLinearGradient(0,-s,0,s); g.addColorStop(0,p.c2); g.addColorStop(1,p.c1);
+    ctx.fillStyle=g; ctx.globalAlpha=.88*p.a;
+    ctx.beginPath();
+    ctx.moveTo(0,s);
+    ctx.bezierCurveTo(-s*1.05,s*.35,-s*.95,-s*.85,-s*.2,-s*.95);
+    ctx.quadraticCurveTo(0,-s*.7,s*.2,-s*.95);
+    ctx.bezierCurveTo(s*.95,-s*.85,s*1.05,s*.35,0,s);
+    ctx.fill(); ctx.restore();
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    var alive=0;
+    for(var i=petals.length-1;i>=0;i--){
+      var p=petals[i];
+      p.sw+=.025; p.flip+=.03; p.y+=p.vy; p.x+=p.vx+Math.sin(p.sw)*.7; p.r+=p.vr;
+      if(p.a<1) p.a=Math.min(1,p.a+.06);
+      if(p.y>H+30||p.x<-40||p.x>W+40){ petals.splice(i,1); continue; }
+      drawPetal(p); alive++;
+    }
+    if(alive||budget>0){ raf=requestAnimationFrame(frame); } else { raf=null; ctx.clearRect(0,0,W,H); }
+  }
+  function onScroll(){
+    if(document.body.classList.contains('is-locked')) { lastY=window.scrollY; return; }
+    var y=window.scrollY, dy=y-lastY; lastY=y;
+    var dist=Math.abs(dy);
+    for(var i=0;i<petals.length;i++) petals[i].y-=dy*.15;
+    budget+=dist/90;
+    while(budget>=1){ budget-=1; if(petals.length<MAX) petals.push(make()); }
+    if(!raf) raf=requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+  window.addEventListener('scroll',onScroll,{passive:true});
 })();
 
 /* INIT */
