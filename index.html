@@ -601,11 +601,10 @@ html[data-lang="en"] .foot{font-family:var(--body);font-size:9.5px;letter-spacin
 .mask-text{display:flex;align-items:center;justify-content:center;
   font-family:var(--display);font-weight:500;font-size:min(42vw,34vh);letter-spacing:-.02em;line-height:1;
   color:transparent;-webkit-background-clip:text;background-clip:text;
-  -webkit-text-stroke:1px var(--gold);transform:scale(1.25)}
+  -webkit-text-stroke:1px var(--gold);transform:scale(1.25);opacity:0}
 .mask-text i{font-style:italic;font-weight:400;font-size:.6em;margin:0 .06em;align-self:center}
 .mask-cap{position:absolute;left:0;right:0;bottom:14%;display:grid;justify-items:center;gap:12px;text-align:center;
   opacity:0;transform:translateY(16px);padding:0 max(16px,env(safe-area-inset-left,0px))}
-.mask-cap .label{color:var(--gold-lt)}
 .mask-cap .mask-date{font-family:var(--gurmukhi);font-size:clamp(17px,4.6vw,22px);color:var(--paper)}
 html[data-lang="en"] .mask-cap .mask-date{font-family:var(--display);font-style:italic;font-size:clamp(19px,5vw,24px)}
 @media(min-width:820px){.mask-sec{--mask-img:url('pond-16x9.jpg')}}
@@ -787,7 +786,6 @@ html[data-lang="en"] .mask-cap .mask-date{font-family:var(--display);font-style:
     <div class="mask-photo" id="maskPhoto"></div>
     <div class="mask-text" id="maskText" aria-hidden="true">S<i>&amp;</i>M</div>
     <div class="mask-cap" id="maskCap">
-      <div class="label" data-pa="ਦੋ ਰੂਹਾਂ, ਇੱਕ ਸਫ਼ਰ" data-en="TWO SOULS, ONE JOURNEY">ਦੋ ਰੂਹਾਂ, ਇੱਕ ਸਫ਼ਰ</div>
       <div class="mask-date" data-pa="ਸ਼ਨੀਵਾਰ, 30 ਜਨਵਰੀ 2027" data-en="Saturday, 30 January 2027">ਸ਼ਨੀਵਾਰ, 30 ਜਨਵਰੀ 2027</div>
     </div>
   </div>
@@ -1288,11 +1286,13 @@ function observeReveals(){
     if(!sec) return;
     var r=sec.getBoundingClientRect(),span=sec.offsetHeight-window.innerHeight;
     var p=Math.max(0,Math.min(1,-r.top/span));
-    var a=Math.min(1,p/.55);
+    var t=Math.max(0,Math.min(1,(p-.12)/.18));
+    var a=Math.max(0,Math.min(1,(p-.2)/.4));
+    text.style.opacity=String(t);
     photo.style.opacity=String(1-a);
     photo.style.transform='scale('+(1+a*.08)+')';
     text.style.transform='scale('+(1.25-a*.25-Math.max(0,p-.55)*.25)+')';
-    var c=Math.max(0,Math.min(1,(p-.5)/.3));
+    var c=Math.max(0,Math.min(1,(p-.62)/.25));
     cap.style.opacity=String(c);
     cap.style.transform='translateY('+(16-16*c)+'px)';
   }
