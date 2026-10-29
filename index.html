@@ -671,6 +671,10 @@ html[data-lang="en"] .mh-title{font-family:var(--display);font-style:italic;font
 html[data-lang="en"] .mh-names{font-family:'Pinyon Script',cursive;font-size:clamp(28px,7.8vw,46px);letter-spacing:0;line-height:1.2;white-space:nowrap;color:#A07A30}
 .mh-date{color:#6B4A16;border-top-color:rgba(160,122,48,.45);border-bottom-color:rgba(160,122,48,.45)}
 .mh-cue{position:absolute;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));margin:0;color:rgba(255,250,235,.9)!important;text-shadow:0 1px 8px rgba(30,22,10,.75)}
+.mh-guest{font-family:'Tiro Gurmukhi',var(--gurmukhi);font-size:clamp(20px,5.4vw,26px);line-height:1.3;color:#6B4A16;margin-top:2px}
+html[data-lang="en"] .mh-guest{font-family:var(--display);font-style:italic}
+.mh-guest small{font-size:.72em;margin-right:.35em;color:#9C7630;font-style:normal}
+.mask-sec.hello-in .mh-guest{transition-delay:.55s}
 </style>
 </head>
 <body class="is-locked">
@@ -804,6 +808,7 @@ html[data-lang="en"] .mh-names{font-family:'Pinyon Script',cursive;font-size:cla
     </div>
     <div class="mask-hello" id="maskHello">
       <div class="mh-i mh-save label" data-pa="ਸ਼ੁਭ ਤਾਰੀਖ਼ ਯਾਦ ਰੱਖਣਾ" data-en="SAVE THE DATE">ਸ਼ੁਭ ਤਾਰੀਖ਼ ਯਾਦ ਰੱਖਣਾ</div>
+      <div class="mh-i mh-guest" id="helloGuest" hidden></div>
       <div class="mh-i mh-title" data-pa="ਅਨੰਦ ਕਾਰਜ" data-en="Anand Karaj">ਅਨੰਦ ਕਾਰਜ</div>
       <div class="mh-i mh-names" data-pa="ਸੁਖਪ੍ਰੀਤ &amp; ਮਨਰੂਪ" data-en="Sukhpreet &amp; Manroop">ਸੁਖਪ੍ਰੀਤ &amp; ਮਨਰੂਪ</div>
       <div class="mh-i mh-date">30 · 01 · 2027</div>
@@ -988,6 +993,13 @@ html[data-lang="en"] .mh-names{font-family:'Pinyon Script',cursive;font-size:cla
     el.setAttribute('data-en','<small>Dear</small>'+e(disp));
     el.innerHTML=el.getAttribute('data-'+(document.documentElement.dataset.lang||'pa'));
     el.hidden=false;
+  }
+  var hg=document.getElementById('helloGuest');
+  if(hg){
+    hg.setAttribute('data-pa','<small>ਸਤਿਕਾਰਯੋਗ</small>'+e(disp));
+    hg.setAttribute('data-en','<small>Dear</small>'+e(disp));
+    hg.innerHTML=hg.getAttribute('data-'+(document.documentElement.dataset.lang||'pa'));
+    hg.hidden=false;
   }
   var msg='ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਹਾਂਜੀ ਅਸੀਂ ਜ਼ਰੂਰ ਆਵਾਂਗੇ! — '+n;
   document.querySelectorAll('.wa-btn').forEach(function(a){ a.href=a.href.split('?')[0]+'?text='+encodeURIComponent(msg); });
