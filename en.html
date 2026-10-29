@@ -675,6 +675,21 @@ html[data-lang="en"] .mh-names{font-family:'Pinyon Script',cursive;font-size:cla
 html[data-lang="en"] .mh-guest{font-family:var(--display);font-style:italic}
 .mh-guest small{font-size:.72em;margin-right:.35em;color:#9C7630;font-style:normal}
 .mask-sec.hello-in .mh-guest{transition-delay:.55s}
+/* SUGGERIMENTI: titoli eventi piu equilibrati, dettagli e pulsanti piu leggibili, pulsante programma */
+.ev-name{font-size:clamp(24px,4.4vw,45px)}
+html[data-lang="en"] .ev-name{font-size:clamp(30px,6vw,54px)}
+.ev-meta{font-size:clamp(16px,1.35vw,19px);font-weight:400;color:var(--ink)}
+.ev-acts .btn{border-color:rgba(74,50,16,.6);color:var(--ink);background:rgba(255,255,255,.6);font-weight:500;font-size:14px}
+html[data-lang="en"] .ev-acts .btn{font-size:11px;font-weight:500}
+@media(max-width:599px){
+  .ev-name{font-size:clamp(22px,6.4vw,31px)}
+  html[data-lang="en"] .ev-name{font-size:clamp(28px,8vw,36px)}
+  .ev-meta{font-size:16.5px}
+}
+.mh-prog{justify-self:center;margin-top:14px;padding:10px 22px;border:1px solid rgba(160,122,48,.7);border-radius:999px;
+  background:rgba(255,251,240,.75);color:#5A3A12;font-family:var(--ek);font-size:14px;text-decoration:none;text-shadow:none}
+html[data-lang="en"] .mh-prog{font-family:var(--body);font-size:11px;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase}
+.mask-sec.hello-in .mh-prog{transition-delay:2s}
 </style>
 </head>
 <body class="is-locked">
@@ -812,6 +827,7 @@ html[data-lang="en"] .mh-guest{font-family:var(--display);font-style:italic}
       <div class="mh-i mh-title" data-pa="ਅਨੰਦ ਕਾਰਜ" data-en="Anand Karaj">ਅਨੰਦ ਕਾਰਜ</div>
       <div class="mh-i mh-names" data-pa="ਸੁਖਪ੍ਰੀਤ &amp; ਮਨਰੂਪ" data-en="Sukhpreet &amp; Manroop">ਸੁਖਪ੍ਰੀਤ &amp; ਮਨਰੂਪ</div>
       <div class="mh-i mh-date">30 · 01 · 2027</div>
+      <a class="mh-i mh-prog" href="#events" data-pa="ਪ੍ਰੋਗਰਾਮ ਵੇਖੋ" data-en="View the program">ਪ੍ਰੋਗਰਾਮ ਵੇਖੋ</a>
       <div class="mh-i mh-cue label" data-pa="ਹੇਠਾਂ ਜਾਓ" data-en="SCROLL">ਹੇਠਾਂ ਜਾਓ</div>
     </div>
   </div>
